@@ -16,8 +16,8 @@ const SIDECAR_HOST = execSync("rustc -vV")
 
 /* ======= clash ======= */
 const CLASH_URL_PREFIX =
-  "https://github.com/Dreamacro/clash/releases/download/premium/";
-const CLASH_LATEST_DATE = "2023.05.19";
+  "https://github.com/c0001/clash/releases/download/premium";
+const CLASH_LATEST_DATE = "2023.05.29";
 
 const CLASH_MAP = {
   "win32-x64": "clash-windows-amd64",
@@ -56,7 +56,7 @@ function clash() {
 
   const isWin = platform === "win32";
   const urlExt = isWin ? "zip" : "gz";
-  const downloadURL = `${CLASH_URL_PREFIX}${name}-${CLASH_LATEST_DATE}.${urlExt}`;
+  const downloadURL = `${CLASH_URL_PREFIX}_${CLASH_LATEST_DATE}/${name}-${CLASH_LATEST_DATE}.${urlExt}`;
   const exeFile = `${name}${isWin ? ".exe" : ""}`;
   const zipFile = `${name}.${urlExt}`;
 
