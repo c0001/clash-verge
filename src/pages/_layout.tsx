@@ -36,9 +36,13 @@ const Layout = () => {
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       // macOS有cmd+w
-      if (e.key === "Escape" && OS !== "macos") {
-        appWindow.close();
-      }
+      //
+      // if (e.key === "Escape" && OS !== "macos") {
+      //   appWindow.close();
+      // }
+
+      // EHOME-PATCH: we do not want main window hide when press ESC
+      return;
     });
 
     listen("verge://refresh-clash-config", async () => {
