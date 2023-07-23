@@ -109,9 +109,25 @@ fn main() -> std::io::Result<()> {
                 match event {
                     tauri::WindowEvent::CloseRequested { api, .. } => {
                         api.prevent_close();
+                        let _ = resolve::save_window_size_position(&app_handle, true);
+
                         app_handle.get_window("main").map(|win| {
                             let _ = win.hide();
                         });
+                    }
+                    _ => {}
+                }
+            }
+        }
+        #[cfg(not(target_os = "macos"))]
+        tauri::RunEvent::WindowEvent { label, event, .. } => {
+            if label == "main" {
+                match event {
+                    tauri::WindowEvent::CloseRequested { .. } => {
+                        let _ = resolve::save_window_size_position(&app_handle, true);
+                    }
+                    tauri::WindowEvent::Moved(_) | tauri::WindowEvent::Resized(_) => {
+                        let _ = resolve::save_window_size_position(&app_handle, false);
                     }
                     _ => {}
                 }

@@ -1,5 +1,6 @@
 use crate::utils::{dirs, help};
 use anyhow::Result;
+use log::LevelFilter;
 use serde::{Deserialize, Serialize};
 
 /// ### `verge.yaml` schema
@@ -7,6 +8,10 @@ use serde::{Deserialize, Serialize};
 pub struct IVerge {
     /// app listening port for app singleton
     pub app_singleton_port: Option<u16>,
+
+    /// app log level
+    /// silent | error | warn | info | debug | trace
+    pub app_log_level: Option<String>,
 
     // i18n
     pub language: Option<String>,
@@ -74,6 +79,10 @@ pub struct IVerge {
 
     /// proxy 页面布局 列数
     pub proxy_layout_column: Option<i32>,
+
+    /// window size and position
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub window_size_position: Option<Vec<f64>>,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize)]
@@ -144,6 +153,7 @@ impl IVerge {
             };
         }
 
+        patch!(app_log_level);
         patch!(language);
         patch!(theme_mode);
         patch!(theme_blur);
@@ -168,6 +178,8 @@ impl IVerge {
         patch!(enable_builtin_enhanced);
         patch!(proxy_layout_column);
         patch!(enable_clash_fields);
+
+        patch!(window_size_position);
     }
 
     /// 在初始化前尝试拿到单例端口的值
@@ -180,6 +192,23 @@ impl IVerge {
         match dirs::verge_path().and_then(|path| help::read_yaml::<IVerge>(&path)) {
             Ok(config) => config.app_singleton_port.unwrap_or(SERVER_PORT),
             Err(_) => SERVER_PORT, // 这里就不log错误了
+        }
+    }
+
+    /// 获取日志等级
+    pub fn get_log_level(&self) -> LevelFilter {
+        if let Some(level) = self.app_log_level.as_ref() {
+            match level.to_lowercase().as_str() {
+                "silent" => LevelFilter::Off,
+                "error" => LevelFilter::Error,
+                "warn" => LevelFilter::Warn,
+                "info" => LevelFilter::Info,
+                "debug" => LevelFilter::Debug,
+                "trace" => LevelFilter::Trace,
+                _ => LevelFilter::Info,
+            }
+        } else {
+            LevelFilter::Info
         }
     }
 }

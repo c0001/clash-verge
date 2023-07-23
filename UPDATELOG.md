@@ -1,3 +1,51 @@
+## v1.3.5
+
+### Features
+
+- update clash core
+
+### Bug Fixes
+
+- fix blurry system tray icon (Windows)
+- fix v1.3.4 wintun.dll not found (Windows)
+- fix v1.3.4 clash core not found (macOS, Linux)
+
+---
+
+## v1.3.4
+
+### Features
+
+- update clash and clash meta core
+- optimize traffic graph high CPU usage when window hidden
+- use polkit to elevate permission (Linux)
+- support app log level setting
+- support copy environment variable
+- overwrite resource file according to file modified
+- save window size and position
+
+### Bug Fixes
+
+- remove fallback group select status
+- enable context menu on editable element (Windows)
+
+---
+
+## v1.3.3
+
+### Features
+
+- update clash and clash meta core
+- show tray icon variants in different system proxy status (Windows)
+- close all connections when mode changed
+
+### Bug Fixes
+
+- encode controller secret into uri
+- error boundary for each page
+
+---
+
 ## v1.3.2
 
 ### Features

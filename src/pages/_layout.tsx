@@ -91,7 +91,17 @@ const Layout = () => {
           }}
           onContextMenu={(e) => {
             // only prevent it on Windows
-            if (OS === "windows") e.preventDefault();
+            const validList = ["input", "textarea"];
+            const target = e.currentTarget;
+            if (
+              OS === "windows" &&
+              !(
+                validList.includes(target.tagName.toLowerCase()) ||
+                target.isContentEditable
+              )
+            ) {
+              e.preventDefault();
+            }
           }}
           sx={[
             ({ palette }) => ({
@@ -129,13 +139,19 @@ const Layout = () => {
             )}
 
             <div className="the-content">
-              <BaseErrorBoundary>
-                <Routes>
-                  {routers.map(({ label, link, ele: Ele }) => (
-                    <Route key={label} path={link} element={<Ele />} />
-                  ))}
-                </Routes>
-              </BaseErrorBoundary>
+              <Routes>
+                {routers.map(({ label, link, ele: Ele }) => (
+                  <Route
+                    key={label}
+                    path={link}
+                    element={
+                      <BaseErrorBoundary key={label}>
+                        <Ele />
+                      </BaseErrorBoundary>
+                    }
+                  />
+                ))}
+              </Routes>
             </div>
           </div>
         </Paper>
