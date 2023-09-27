@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "Clash Verge",
-    "version": "1.3.5"
+    "version": "1.3.7"
   },
   "build": {
     "distDir": "../dist",
@@ -46,7 +46,7 @@
         "digestAlgorithm": "sha256",
         "timestampUrl": "",
         "wix": {
-          "language": ["zh-CN", "en-US"]
+          "language": ["zh-CN", "en-US", "ru-RU"]
         }
       }
     },

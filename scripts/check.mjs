@@ -18,19 +18,19 @@ const SIDECAR_HOST = execSync("rustc -vV")
 const CLASH_STORAGE_PREFIX = "https://release.dreamacro.workers.dev/";
 const CLASH_URL_PREFIX =
   "https://github.com/c0001/clash/releases/download/premium";
-const CLASH_LATEST_DATE = "2023.07.22";
+const CLASH_LATEST_DATE = "2023.08.17";
 
 const CLASH_MAP = {
   "win32-x64": "clash-windows-amd64",
   "darwin-x64": "clash-darwin-amd64",
   "darwin-arm64": "clash-darwin-arm64",
   "linux-x64": "clash-linux-amd64",
-  "linux-arm64": "clash-linux-armv8",
+  "linux-arm64": "clash-linux-arm64",
 };
 
 /* ======= clash meta ======= */
 const META_URL_PREFIX = `https://github.com/MetaCubeX/Clash.Meta/releases/download/`;
-const META_VERSION = "v1.15.0";
+const META_VERSION = "v1.15.1";
 
 const META_MAP = {
   "win32-x64": "clash.meta-windows-amd64-compatible",
@@ -286,17 +286,17 @@ const resolveUninstall = () =>
 const resolveMmdb = () =>
   resolveResource({
     file: "Country.mmdb",
-    downloadURL: `https://github.com/Dreamacro/maxmind-geoip/releases/download/20221112/Country.mmdb`,
+    downloadURL: `https://github.com/Dreamacro/maxmind-geoip/releases/download/20230812/Country.mmdb`,
   });
 const resolveGeosite = () =>
   resolveResource({
     file: "geosite.dat",
-    downloadURL: `https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat`,
+    downloadURL: `https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat`,
   });
 const resolveGeoIP = () =>
   resolveResource({
     file: "geoip.dat",
-    downloadURL: `https://github.com/Loyalsoldier/geoip/releases/latest/download/geoip.dat`,
+    downloadURL: `https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat`,
   });
 
 const tasks = [

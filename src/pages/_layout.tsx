@@ -13,12 +13,13 @@ import { getAxios } from "@/services/api";
 import { useVerge } from "@/hooks/use-verge";
 import { ReactComponent as LogoSvg } from "@/assets/image/logo.svg";
 import { BaseErrorBoundary, Notice } from "@/components/base";
-import LayoutItem from "@/components/layout/layout-item";
-import LayoutControl from "@/components/layout/layout-control";
-import LayoutTraffic from "@/components/layout/layout-traffic";
-import UpdateButton from "@/components/layout/update-button";
-import useCustomTheme from "@/components/layout/use-custom-theme";
+import { LayoutItem } from "@/components/layout/layout-item";
+import { LayoutControl } from "@/components/layout/layout-control";
+import { LayoutTraffic } from "@/components/layout/layout-traffic";
+import { UpdateButton } from "@/components/layout/update-button";
+import { useCustomTheme } from "@/components/layout/use-custom-theme";
 import getSystem from "@/utils/get-system";
+import "dayjs/locale/ru";
 import "dayjs/locale/zh-cn";
 
 dayjs.extend(relativeTime);
@@ -51,6 +52,7 @@ const Layout = () => {
       mutate("getProxies");
       mutate("getVersion");
       mutate("getClashConfig");
+      mutate("getProviders");
     });
 
     // update the verge config

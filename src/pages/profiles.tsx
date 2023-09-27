@@ -4,6 +4,8 @@ import { useLockFn } from "ahooks";
 import { useSetRecoilState } from "recoil";
 import { Box, Button, Grid, IconButton, Stack, TextField } from "@mui/material";
 import {
+  ClearRounded,
+  ContentCopyRounded,
   LocalFireDepartmentRounded,
   RefreshRounded,
   TextSnippetOutlined,
@@ -35,6 +37,7 @@ const ProfilePage = () => {
 
   const [url, setUrl] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [activating, setActivating] = useState("");
 
   const {
     profiles = {},
@@ -60,11 +63,12 @@ const ProfilePage = () => {
     const type1 = ["local", "remote"];
     const type2 = ["merge", "script"];
 
-    const regularItems = items.filter((i) => type1.includes(i.type!));
-    const restItems = items.filter((i) => type2.includes(i.type!));
+    const regularItems = items.filter((i) => i && type1.includes(i.type!));
+    const restItems = items.filter((i) => i && type2.includes(i.type!));
     const restMap = Object.fromEntries(restItems.map((i) => [i.uid, i]));
     const enhanceItems = chain
       .map((i) => restMap[i]!)
+      .filter(Boolean)
       .concat(restItems.filter((i) => !chain.includes(i.uid)));
 
     return { regularItems, enhanceItems };
@@ -99,6 +103,8 @@ const ProfilePage = () => {
 
   const onSelect = useLockFn(async (current: string, force: boolean) => {
     if (!force && current === profiles.current) return;
+    // 避免大多数情况下loading态闪烁
+    const reset = setTimeout(() => setActivating(current), 100);
     try {
       await patchProfiles({ current });
       mutateLogs();
@@ -107,6 +113,9 @@ const ProfilePage = () => {
       Notice.success("Refresh clash config", 1000);
     } catch (err: any) {
       Notice.error(err?.message || err.toString(), 4000);
+    } finally {
+      clearTimeout(reset);
+      setActivating("");
     }
   });
 
@@ -188,6 +197,11 @@ const ProfilePage = () => {
     });
   });
 
+  const onCopyLink = async () => {
+    const text = await navigator.clipboard.readText();
+    if (text) setUrl(text);
+  };
+
   return (
     <BasePage
       title={t("Profiles")}
@@ -234,6 +248,28 @@ const ProfilePage = () => {
           onChange={(e) => setUrl(e.target.value)}
           sx={{ input: { py: 0.65, px: 1.25 } }}
           placeholder={t("Profile URL")}
+          InputProps={{
+            sx: { pr: 1 },
+            endAdornment: !url ? (
+              <IconButton
+                size="small"
+                sx={{ p: 0.5 }}
+                title={t("Paste")}
+                onClick={onCopyLink}
+              >
+                <ContentCopyRounded fontSize="inherit" />
+              </IconButton>
+            ) : (
+              <IconButton
+                size="small"
+                sx={{ p: 0.5 }}
+                title={t("Clear")}
+                onClick={() => setUrl("")}
+              >
+                <ClearRounded fontSize="inherit" />
+              </IconButton>
+            ),
+          }}
         />
         <Button
           disabled={!url || disabled}
@@ -258,6 +294,7 @@ const ProfilePage = () => {
             <Grid item xs={12} sm={6} md={4} lg={3} key={item.file}>
               <ProfileItem
                 selected={profiles.current === item.uid}
+                activating={activating === item.uid}
                 itemData={item}
                 onSelect={(f) => onSelect(item.uid, f)}
                 onEdit={() => viewerRef.current?.edit(item)}
