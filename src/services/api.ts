@@ -65,7 +65,12 @@ export const getRules = async () => {
 /// Get Proxy delay
 export const getProxyDelay = async (name: string, url?: string) => {
   const params = {
-    timeout: 5000,
+    // use lower latency to speedup latency test, either since that
+    // the original 5000ms is redundant for connection even if it can
+    // be connected.
+    //
+    // TODO: add latency timeout option
+    timeout: 800,
     url: url || "http://www.gstatic.com/generate_204",
   };
   const instance = await getAxios();
