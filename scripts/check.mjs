@@ -300,7 +300,7 @@ const resolveGeoIP = () =>
   });
 
 const tasks = [
-  { name: "clash", func: resolveClash, retry: 5 },
+  { name: "clash", func: () => resolveSidecar(clashS3()), retry: 5 },
   { name: "clash-meta", func: () => resolveSidecar(clashMeta()), retry: 5 },
   { name: "wintun", func: resolveWintun, retry: 5, winOnly: true },
   { name: "service", func: resolveService, retry: 5, winOnly: true },
