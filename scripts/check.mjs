@@ -30,14 +30,14 @@ const CLASH_MAP = {
 
 /* ======= clash meta ======= */
 const META_URL_PREFIX = `https://github.com/c0001/Clash.Meta/releases/download/`;
-const META_VERSION = "v1.16.0";
+const META_VERSION = "MetaCubeX_v1.18.0";
 
 const META_MAP = {
-  "win32-x64": "clash.meta-windows-amd64-compatible",
-  "darwin-x64": "clash.meta-darwin-amd64",
-  "darwin-arm64": "clash.meta-darwin-arm64",
-  "linux-x64": "clash.meta-linux-amd64-compatible",
-  "linux-arm64": "clash.meta-linux-arm64",
+  "win32-x64": "mihomo-windows-amd64-compatible",
+  "darwin-x64": "mihomo-darwin-amd64",
+  "darwin-arm64": "mihomo-darwin-arm64",
+  "linux-x64": "mihomo-linux-amd64-compatible",
+  "linux-arm64": "mihomo-linux-arm64",
 };
 
 /**
