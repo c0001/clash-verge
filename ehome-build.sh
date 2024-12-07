@@ -81,6 +81,9 @@ if [[ -n $use_http_proxy ]]; then
   yarn config set httpProxy "$use_http_proxy"
 fi
 
-yarn install
-yarn run check
-yarn run build
+# FIXME: [2024-12-08 Sun 00:45:23] see bug of appimage build:
+# https://github.com/linuxdeploy/linuxdeploy/issues/272
+export NO_STRIP=true
+yarn install ; _nerr
+yarn run check ; _nerr
+yarn run build ; _nerr
